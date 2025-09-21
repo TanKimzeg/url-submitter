@@ -92,11 +92,8 @@ journalctl -u url-submitter.service -n 50 --no-pager
 1) 创建运行脚本 `/opt/url-submitter/run-url-submitter.sh`
 ```bash
 sudo tee /opt/url-submitter/run-url-submitter.sh >/dev/null <<'EOF'
-#!/usr/bin/env bash
+#!/usr/bin/bash
 set -euo pipefail
-
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-export LANG=C.UTF-8
 
 # 集中管理环境变量（推荐）：/etc/url-submitter/env
 if [ -f /etc/url-submitter/env ]; then
