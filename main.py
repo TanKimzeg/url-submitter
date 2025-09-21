@@ -40,17 +40,17 @@ class SitemapParser:
                 if link_element is not None and link_element.text:
                     urls.append(link_element.text.strip())
             
-            print(f"成功解析站点地图，找到 {len(urls)} 个URL")
+            logger.info(f"成功解析站点地图，找到 {len(urls)} 个URL")
             return urls
             
         except ET.ParseError as e:
-            print(f"XML解析错误: {e}")
+            logger.error(f"XML解析错误: {e}")
             return []
         except FileNotFoundError:
-            print(f"文件未找到: {self.sitemap_file}")
+            logger.error(f"文件未找到: {self.sitemap_file}")
             return []
         except Exception as e:
-            print(f"解析站点地图时发生错误: {e}")
+            logger.error(f"解析站点地图时发生错误: {e}")
             return []
 
 class Submitter:
@@ -233,7 +233,7 @@ class Logger:
             file_handler.setLevel(level)
             file_formatter = logging.Formatter(
                 '[%(asctime)s-%(levelname)s]: %(message)s',
-                datefmt='%H:%M:%S'
+                datefmt='%Y-%m-%d %H:%M:%S'
             )
             file_handler.setFormatter(file_formatter)
             self.logger.addHandler(file_handler)
@@ -241,13 +241,15 @@ class Logger:
         # 创建自定义格式化器并添加到控制台处理器
         color_formatter = Logger.ColorFormatter(
             '[%(asctime)s-%(levelname)s]: %(message)s',
-            datefmt='%H:%M:%S'
+            datefmt='%Y-%m-%d %H:%M:%S'
         )
         console_handler.setFormatter(color_formatter)
         self.logger.addHandler(console_handler)
 
     def get_logger(self):
         return self.logger
+
+logger:logging.Logger
 
 def main():
     """主函数"""
@@ -265,8 +267,6 @@ def main():
     if not urls:
         logger.warning("未找到任何URL")
         return
-    
-    logger.info(f"提取到{len(urls)}个URL:")
     
     # 从环境变量获取API密钥
     bing_api_key = os.getenv('BING_API_KEY')
