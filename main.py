@@ -249,7 +249,7 @@ class Logger:
     def get_logger(self):
         return self.logger
 
-logger:logging.Logger
+logger:logging.Logger = logging.getLogger(__name__)
 
 def main():
     """主函数"""
