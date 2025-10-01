@@ -112,7 +112,7 @@ mkdir -p /var/log/url-submitter
 cd /opt/url-submitter
 
 # 使用 uv 运行（程序内部日志写到 submit.log；cron 自身输出请在 crontab 行里重定向）
-uv run python main.py --sitemap sitemap.xml --log /var/log/url-submitter/submit.log
+$HOME/.local/bin/uv run python main.py --sitemap sitemap.xml --log /var/log/url-submitter/submit.log
 EOF
 
 sudo chmod +x /opt/url-submitter/run-url-submitter.sh
